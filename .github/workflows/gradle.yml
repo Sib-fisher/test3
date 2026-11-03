@@ -22,14 +22,14 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
       
-    # Запуск вашего SUT (app-order.jar)
+    # Запуск SUT (без ожидания)
     - name: Start SUT
       run: java -jar ./artifacts/app-order.jar &
-      
-    # Ждем, пока сервер поднимется
-    - name: Wait for SUT
-      run: sleep 10
 
-    # Запуск тестов
+    # Выдача прав на запуск gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    # Запуск тестов с ключом --info
     - name: Run Tests
-      run: ./gradlew test
+      run: ./gradlew test --info
